@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .tabs-container {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      position: relative; /* Added positioning for the "+" button */
+    }
+
+    .tabs {
+      display: flex;
+    }
+
+    .tab_set {
+      display: flex;
+      align-items: center; /* Center align the "+" button with the tabs */
+    }
+
+    .tab {
+      padding: 10px;
+      background-color: #f1f1f1;
+      margin: 0 5px;
+      cursor: pointer;
+    }
+
+    .remove-tab {
+      margin-left: 5px;
+      color: red;
+      cursor: pointer;
+    }
+
+    .search-bar {
+      display: flex;
+      margin-top: 10px;
+    }
+
+    input {
+      flex: 1;
+      padding: 5px;
+    }
+
+    button {
+      padding: 5px;
+      cursor: pointer;
+    }
+
+    .add-tab-button {
+      margin-left: 5px;
+    }
+
+    .iframe-container {
+      flex: 1;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: 1px solid #9e9494;
+    }
+  </style>
+  <title>Custom Tabs</title>
+</head>
+<body>
+  <div class="tabs-container">
+    <div class="tab_set">
+      <div class="tabs">
+        <div class="tab" id="tab-1">
+          <span class="tab-title">New Tab</span>
+          <span class="remove-tab" onclick="removeTab('tab-1')">X</span>
+        </div>
+      </div>
+      <button class="add-tab-button" onclick="addTab()">+</button>
+    </div>
+
+    <div class="search-bar">
+      <input type="text" id="urlInput" placeholder="Enter URL">
+      <button onclick="loadUrl()">Go</button>
+    </div>
+    <div class="iframe-container">
+      <iframe id="contentFrame" src="" frameborder="0"></iframe>
+    </div>
+  </div>
+
+  <script>
+    let currentTab = 1;
+
+    function loadUrl() {
+      const urlInput = document.getElementById('urlInput');
+      const contentFrame = document.getElementById('contentFrame');
+
+      contentFrame.src = urlInput.value;
+    }
+
+    function addTab() {
+      const tabs = document.querySelector('.tabs');
+      currentTab++;
+      
+      const newTab = document.createElement('div');
+      newTab.classList.add('tab');
+      newTab.id = 'tab-' + currentTab;
+      newTab.innerHTML = `
+        <span class="tab-title">Tab- ${currentTab}</span>
+        <span class="remove-tab" onclick="removeTab('tab-${currentTab}')">X</span>
+      `;
+
+      tabs.appendChild(newTab);
+    }
+
+    function removeTab(tabId) {
+      const tabToRemove = document.getElementById(tabId);
+      const tabs = document.querySelector('.tabs');
+
+      if (tabToRemove) {
+        tabs.removeChild(tabToRemove);
+      }
+    }
+  </script>
+</body>
+</html>
